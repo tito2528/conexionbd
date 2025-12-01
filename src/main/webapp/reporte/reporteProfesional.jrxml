@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6fb60c51-dcb8-4be2-a6ed-b351c3d2d54a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+    p.id_profesional,
+    p.prof_nombre,
+    p.prof_apellido,
+    p.prof_telefono,
+    p.prof_email,
+    e.espe_nombre AS especialidad,
+    s.suc_nombre AS sucursal,
+    s.suc_direccion AS direccion_sucursal,
+
+    CASE ph.dia_semana
+        WHEN 2 THEN 'Lunes'
+        WHEN 3 THEN 'Martes'
+        WHEN 4 THEN 'Miércoles'
+        WHEN 5 THEN 'Jueves'
+        WHEN 6 THEN 'Viernes'
+        WHEN 7 THEN 'Sábado'
+        ELSE 'Sin día'
+    END AS dia_semana_letras,
+
+    TO_CHAR(h.hora_inicio, 'HH24:MI') AS hora_inicio,
+    TO_CHAR(h.hora_fin, 'HH24:MI') AS hora_fin,
+    p.estado
+
+FROM profesional p
+LEFT JOIN especialidades e 
+    ON p.id_especialidad = e.id_especialidad
+LEFT JOIN sucursal s 
+    ON p.id_sucursal = s.id_sucursal
+
+LEFT JOIN profesional_horario ph
+    ON ph.id_profesional = p.id_profesional
+    AND ph.dia_semana BETWEEN 2 AND 7   -- ✔ evita días inválidos
+
+LEFT JOIN horario h
+    ON h.id_horario = ph.id_horario
+
+ORDER BY
+    p.prof_apellido, 
+    p.prof_nombre, 
+    ph.dia_semana;
+]]>
+	</queryString>
+	<field name="id_profesional" class="java.lang.Integer"/>
+	<field name="prof_nombre" class="java.lang.String"/>
+	<field name="prof_apellido" class="java.lang.String"/>
+	<field name="prof_telefono" class="java.lang.String"/>
+	<field name="prof_email" class="java.lang.String"/>
+	<field name="especialidad" class="java.lang.String"/>
+	<field name="sucursal" class="java.lang.String"/>
+	<field name="direccion_sucursal" class="java.lang.String"/>
+	<field name="dia_semana_letras" class="java.lang.String"/>
+	<field name="hora_inicio" class="java.lang.String"/>
+	<field name="hora_fin" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="184" y="29" width="188" height="28" backcolor="#000000" uuid="72cf8da9-8a2b-41d3-a300-7dcfd248316d"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Lista de Profesionales]]></text>
+			</staticText>
+			<image>
+				<reportElement x="56" y="0" width="84" height="74" uuid="f1920711-a996-424c-80ec-71118af14253"/>
+				<imageExpression><![CDATA[".\\logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="140" y="0" width="261" height="22" uuid="4d659c0d-a4c0-428b-9556-cb8e06d68e7f"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Reporte de todos los Profesionales]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="61" height="20" uuid="a40acd95-77af-43af-a97a-d3acc013cf62"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="0" width="61" height="20" uuid="0b002e4e-17d0-4268-a5d8-73f6a451fcd8"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="0" width="61" height="20" uuid="4a546ed8-0f27-48d6-9716-ccf687fbe8d6"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="0" width="61" height="20" uuid="d2b10e80-8055-4b0d-8d6c-c9b779d7aa30"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="0" width="50" height="20" uuid="272948a3-178d-4e66-8be7-83f404de547d"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="0" width="65" height="20" uuid="480803cf-4c64-49e2-bb8f-d4d62b77313d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[hora_inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="0" width="107" height="20" uuid="23a428b1-2777-46cc-bb09-5205a0bb9eb9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[especialidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="2" width="74" height="18" uuid="7be65783-2d43-43e9-843e-64e6b8a6b093"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[hora_fin]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="562" height="1" uuid="c14ee436-943e-4dab-a1e1-5efbf47bc78c"/>
+			</line>
+			<staticText>
+				<reportElement x="216" y="0" width="94" height="20" uuid="ff5598c5-3610-499c-9ec8-c2be673e196a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dia de la semana]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="61" height="20" uuid="49c97a4a-e1a8-4254-aca6-d99a40638e74"/>
+				<textFieldExpression><![CDATA[$F{id_profesional}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="56" y="0" width="61" height="20" uuid="737375df-d1d8-4506-9f4d-2f3c907ec352"/>
+				<textFieldExpression><![CDATA[$F{prof_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="0" width="100" height="20" uuid="5541c74c-37d6-41bd-86ec-482fd0228d64"/>
+				<textFieldExpression><![CDATA[$F{especialidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="100" height="20" uuid="7e1a3843-e03f-49a7-be1a-c9d9865e9622"/>
+				<textFieldExpression><![CDATA[$F{hora_inicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="100" height="20" uuid="871b8e10-0870-411f-8b2f-b345d0145922"/>
+				<textFieldExpression><![CDATA[$F{hora_fin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="0" width="61" height="20" uuid="31b3eb49-4585-4c0c-ab2b-ed1a52b56534"/>
+				<textFieldExpression><![CDATA[$F{prof_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="0" width="61" height="20" uuid="dfbe9a1f-3ef0-4c98-800b-4ca591121513"/>
+				<textFieldExpression><![CDATA[$F{prof_telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="0" width="100" height="20" uuid="9d4a8dab-cfa0-4b58-86f6-256fa96604b4"/>
+				<textFieldExpression><![CDATA[$F{dia_semana_letras}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="516" y="0" width="54" height="20" uuid="ab61b6e6-a018-4670-b846-6533dcc5ca90"/>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="293" y="25" width="40" height="20" uuid="3c55e97d-e1ed-4f97-975e-4548bc3a32d1"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="25" width="77" height="20" uuid="9fcfffd2-654d-4bdb-bed8-b97ca5fe17c6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

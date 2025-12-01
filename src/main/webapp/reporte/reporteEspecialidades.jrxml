@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c55afe68-7e1a-4420-bfa6-ccc32467bcb4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="99b0d741-5981-44a5-8ede-7437ca731e1e"/>
+	<parameter name="llamaespecialidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM especialidades]]>
+	</queryString>
+	<field name="id_especialidad" class="java.lang.Integer"/>
+	<field name="espe_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="99" splitType="Stretch">
+			<image>
+				<reportElement x="51" y="11" width="84" height="74" uuid="077b595d-c11b-4ac5-b237-b392bbff9d70"/>
+				<imageExpression><![CDATA[".\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="169" y="31" width="188" height="28" backcolor="#000000" uuid="fb33afb4-3307-4995-9d28-f35896185f6d"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Lista de Especialidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="135" y="77" width="290" height="22" uuid="7853fdff-b3d0-4202-a272-40382c5a853a"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Reporte de todos las Especialidades]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="24" width="555" height="1" uuid="1ac99f2a-6574-4d79-a0f6-9e1013f1636b"/>
+			</line>
+			<staticText>
+				<reportElement x="51" y="5" width="135" height="20" uuid="b713f126-f166-480c-be85-2b371d829edc"/>
+				<text><![CDATA[Nombre de la especialidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="4" width="41" height="20" uuid="b63c106f-3328-4eb8-9212-f01e6683a5c5"/>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="51" y="10" width="100" height="20" uuid="53fadcb6-28af-42b0-8c6a-68cfe1603004"/>
+				<textFieldExpression><![CDATA[$F{espe_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="10" width="100" height="20" uuid="ea53e4c8-7be0-4c62-9798-1e7d1d1e3268"/>
+				<textFieldExpression><![CDATA[$F{id_especialidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="312" y="20" width="40" height="20" uuid="30695ece-29b5-4550-aac6-a1d0847466bc"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="20" width="77" height="20" uuid="3d33dc2e-c8a3-4121-b3f9-d29e94ff8937"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

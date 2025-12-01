@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Ups! Algo salió mal</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#0000C0, #ff6e7f, #0000C0);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .error-container {
+      text-align: center;
+    }
+    .error-code {
+      font-size: 8rem;
+      font-weight: bold;
+    }
+    .error-message {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      color: #ff6e7f;
+      background: #fff;
+      border: none;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn:hover {
+      background: #ff6e7f;
+      color: #fff;
+    }
+    .animation {
+      font-size: 4rem;
+      margin-top: 20px;
+      animation: float 3s infinite;
+    }
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+  <script>
+    // JavaScript para manejar la ruta dinámica
+    document.addEventListener('DOMContentLoaded', function() {
+      // Obtener el contexto de la aplicación
+      const contextPath = window.location.pathname.split('/')[1];
+      const baseUrl = '/' + contextPath;
+      
+      // Configurar el botón con la ruta correcta
+      const backButton = document.querySelector('.btn');
+      backButton.href = baseUrl + '/login.jsp';
+    });
+  </script>
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-code">¡Ups!</div>
+    <div class="animation">🪂</div>
+    <div class="error-message">Parece que algo salió mal. Estamos trabajando para solucionarlo.</div>
+    <a href="#" class="btn">Volver al inicio</a>
+  </div>
+</body>
+</html>

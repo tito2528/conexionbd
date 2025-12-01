@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="75a6803b-6b75-42c9-8786-dd8f4b5c79be">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="llamaprofesional" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    p.id_profesional,
+    p.prof_nombre,
+    p.prof_apellido,
+    p.prof_telefono,
+    p.prof_email,
+    e.espe_nombre AS especialidad,
+
+    CASE ph.dia_semana
+        WHEN 2 THEN 'Lunes'
+        WHEN 3 THEN 'Martes'
+        WHEN 4 THEN 'Miércoles'
+        WHEN 5 THEN 'Jueves'
+        WHEN 6 THEN 'Viernes'
+        WHEN 7 THEN 'Sábado'
+        ELSE 'Sin día'
+    END AS dia_semana_letras,
+
+    TO_CHAR(h.hora_inicio, 'HH24:MI') AS hora_inicio,
+    TO_CHAR(h.hora_fin,   'HH24:MI') AS hora_fin
+FROM profesional p
+LEFT JOIN especialidades e 
+    ON p.id_especialidad = e.id_especialidad
+
+LEFT JOIN profesional_horario ph 
+    ON ph.id_profesional = p.id_profesional
+    AND ph.dia_semana BETWEEN 2 AND 7   -- ✔ solo días válidos
+
+LEFT JOIN horario h 
+    ON h.id_horario = ph.id_horario
+
+WHERE p.id_profesional = $P{llamaprofesional}
+ORDER BY ph.dia_semana;]]>
+	</queryString>
+	<field name="id_profesional" class="java.lang.Integer"/>
+	<field name="prof_nombre" class="java.lang.String"/>
+	<field name="prof_apellido" class="java.lang.String"/>
+	<field name="prof_telefono" class="java.lang.String"/>
+	<field name="prof_email" class="java.lang.String"/>
+	<field name="especialidad" class="java.lang.String"/>
+	<field name="dia_semana_letras" class="java.lang.String"/>
+	<field name="hora_inicio" class="java.lang.String"/>
+	<field name="hora_fin" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="263" height="42" uuid="127b9dc0-a170-4bad-a633-8d4f95d3aefd"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Reporte de Profesional]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="317" height="20" uuid="280327a4-37e1-4155-b8d2-fd2f26385d3f"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos del Profesional]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="167" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="167" uuid="1e6d64c7-096f-488f-bebb-1e15955f416c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="11" y="16" width="100" height="20" uuid="a8db92a0-8ff6-4a74-8575-5dc5266bf94c"/>
+				<text><![CDATA[nombre]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="16" width="100" height="20" uuid="c2e34cd2-31d6-4b11-918b-9ea6e00ac0e1"/>
+				<textFieldExpression><![CDATA[$F{prof_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="36" width="100" height="20" uuid="4c84fd7e-d885-41a4-bba2-546a02f1a66b"/>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="36" width="100" height="20" uuid="5a56f9e1-729c-47b8-ade5-94efa30e159f"/>
+				<textFieldExpression><![CDATA[$F{prof_apellido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="56" width="100" height="20" uuid="6171ef10-bc36-4bb4-b98f-79bbb863a539"/>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="56" width="100" height="20" uuid="333c79cd-adf6-4334-b2a9-5b68ef34eb51"/>
+				<textFieldExpression><![CDATA[$F{prof_telefono}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="76" width="100" height="20" uuid="120d9c89-24c1-49e4-9c47-29e8ab559b55"/>
+				<text><![CDATA[Especialidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="76" width="100" height="20" uuid="8ceb2db7-899f-4a38-a85a-1a8b1643384f"/>
+				<textFieldExpression><![CDATA[$F{especialidad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="117" width="100" height="20" uuid="3d49e627-97ff-4688-bc39-9ed246aa9f24"/>
+				<text><![CDATA[Hora_inicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="137" width="100" height="20" uuid="c7e6c57d-d93b-4a89-8d5e-e767349179fa"/>
+				<text><![CDATA[Hora_fin]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="117" width="100" height="20" uuid="68f47b5d-5c71-4224-9fbe-20120667fa45"/>
+				<textFieldExpression><![CDATA[$F{hora_inicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="111" y="137" width="100" height="20" uuid="48b2d5e9-bd1c-4a60-9f46-e895f6770c30"/>
+				<textFieldExpression><![CDATA[$F{hora_fin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="96" width="100" height="20" uuid="a708f3cf-78ca-48af-b450-54fe0fe07edb"/>
+				<text><![CDATA[dias de la semana]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="97" width="100" height="20" uuid="12c2b1dc-0a44-4835-8617-b369d3661ae2"/>
+				<textFieldExpression><![CDATA[$F{dia_semana_letras}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

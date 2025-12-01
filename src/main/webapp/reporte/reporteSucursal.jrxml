@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4415ddd0-3ae4-48d7-8bf3-f1c34b5c7386">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM sucursal]]>
+	</queryString>
+	<field name="id_sucursal" class="java.lang.Integer"/>
+	<field name="suc_nombre" class="java.lang.String"/>
+	<field name="suc_direccion" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="91" splitType="Stretch">
+			<staticText>
+				<reportElement x="155" y="28" width="188" height="28" backcolor="#000000" uuid="5ef5273b-4680-432a-ac1f-cbe4ab60810c"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Lista de Sucursal]]></text>
+			</staticText>
+			<image>
+				<reportElement x="52" y="5" width="84" height="74" uuid="6343169d-caca-4629-8e63-fcef7dd2fac5"/>
+				<imageExpression><![CDATA[".\\logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="136" y="0" width="290" height="22" uuid="f82a6d25-bca3-462f-9cb8-ae989af22d92"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Reporte de todas las Sucursales]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="100" height="20" uuid="51851c12-0c2d-44eb-a86c-53e52723e4ca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="5" width="142" height="20" uuid="0af41e21-31e5-4596-9ff7-165b54ba45fc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Direccion]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="c3dbeab2-e012-432f-87e6-0b1723ecc744"/>
+			</line>
+			<textField>
+				<reportElement x="266" y="1" width="100" height="20" uuid="78847eef-5940-4375-aca1-742d0738c63d"/>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="94a35191-0b21-409e-a917-d54ec6ddf8a3"/>
+				<textFieldExpression><![CDATA[$F{suc_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="142" height="20" uuid="44455417-4587-4117-8cc2-333e2e7edd3f"/>
+				<textFieldExpression><![CDATA[$F{suc_direccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="266" y="1" width="100" height="20" uuid="bcb27bf8-5862-4ae7-91ea-b84e23054da5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="289" y="15" width="40" height="20" uuid="745d3ce0-689f-4e72-9d9b-40657406015f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="15" width="77" height="20" uuid="c7514bdc-b5d8-455d-81a4-87ca80317956"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

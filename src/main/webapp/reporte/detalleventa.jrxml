@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalleventa" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="59f0c530-1207-47e1-9be6-920bf9e07098">
+	<property name="ireport.zoom" value="1.464100000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cod" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+  d.id_detalle_factura,
+  d.id_factura,
+  d.cantidad,
+  s.ser_nombre AS descripcion,
+  d.precio_unitario AS precio,
+
+  -- Subtotal formateado con puntos por miles
+  CASE 
+      WHEN d.subtotal = round(d.subtotal) THEN to_char(d.subtotal, 'FM999G999G999')
+      ELSE to_char(d.subtotal, 'FM999G999G999D99')
+  END AS total_linea,
+
+  -- Subtotal en letras (nuevo)
+  numero_a_letras_paraguay(d.subtotal) AS subtotal_en_letras,
+
+  -- Bases imponibles
+  CASE 
+      WHEN s.iva_tipo = '5' THEN
+          CASE WHEN d.subtotal = round(d.subtotal) THEN to_char(d.subtotal, 'FM999G999G999')
+               ELSE to_char(d.subtotal, 'FM999G999G999D99')
+          END
+      ELSE to_char(0, 'FM999G999G999')
+  END AS base_iva_5,
+
+  CASE 
+      WHEN s.iva_tipo = '10' THEN
+          CASE WHEN d.subtotal = round(d.subtotal) THEN to_char(d.subtotal, 'FM999G999G999')
+               ELSE to_char(d.subtotal, 'FM999G999G999D99')
+          END
+      ELSE to_char(0, 'FM999G999G999')
+  END AS base_iva_10,
+
+  CASE 
+      WHEN s.iva_tipo = 'EX' THEN
+          CASE WHEN d.subtotal = round(d.subtotal) THEN to_char(d.subtotal, 'FM999G999G999')
+               ELSE to_char(d.subtotal, 'FM999G999G999D99')
+          END
+      ELSE to_char(0, 'FM999G999G999')
+  END AS base_exenta,
+
+  -- IVA 5%
+  CASE 
+      WHEN s.iva_tipo = '5' THEN
+          CASE WHEN d.subtotal / 21 = round(d.subtotal / 21) THEN to_char(d.subtotal / 21, 'FM999G999G999')
+               ELSE to_char(d.subtotal / 21, 'FM999G999G999D99')
+          END
+      ELSE to_char(0, 'FM999G999G999')
+  END AS iva_5,
+
+  -- IVA 10%
+  CASE 
+      WHEN s.iva_tipo = '10' THEN
+          CASE WHEN d.subtotal / 11 = round(d.subtotal / 11) THEN to_char(d.subtotal / 11, 'FM999G999G999')
+               ELSE to_char(d.subtotal / 11, 'FM999G999G999D99')
+          END
+      ELSE to_char(0, 'FM999G999G999')
+  END AS iva_10
+
+FROM det_facturacion d
+JOIN servicio s ON d.id_servicio = s.id_servicio
+WHERE d.id_factura = $P{cod};
+]]>
+	</queryString>
+	<field name="id_detalle_factura" class="java.lang.Integer"/>
+	<field name="id_factura" class="java.lang.Integer"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="precio" class="java.math.BigDecimal"/>
+	<field name="total_linea" class="java.lang.String"/>
+	<field name="subtotal_en_letras" class="java.lang.String"/>
+	<field name="base_iva_5" class="java.lang.String"/>
+	<field name="base_iva_10" class="java.lang.String"/>
+	<field name="base_exenta" class="java.lang.String"/>
+	<field name="iva_5" class="java.lang.String"/>
+	<field name="iva_10" class="java.lang.String"/>
+	<variable name="multiplicador" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{cantidad}*$F{precio}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="300" y="2" width="100" height="20" uuid="db3b3d0f-404a-40d4-900a-4c5a16606662"/>
+				<textElement>
+					<font size="10" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="2" width="100" height="20" uuid="3c27c360-9c31-45bf-a59a-700a801d51f3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="2" width="100" height="20" uuid="5f566c20-b1c8-4eab-8474-ad5b4f1612f1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="508" y="2" width="80" height="20" uuid="afb0e0b6-38ef-4801-92a9-f7a8d00205cb"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_linea}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="118" splitType="Stretch">
+			<textField>
+				<reportElement x="389" y="27" width="331" height="75" uuid="c83732ae-3cfa-41b5-b860-ced40f1e2718"/>
+				<textElement>
+					<font size="36"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_linea}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="57" width="60" height="20" uuid="450de02e-c944-4ced-87bd-04cdea3c6c1a"/>
+				<textFieldExpression><![CDATA[$F{iva_10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="57" width="62" height="20" uuid="da0cfe59-2518-401b-9ab2-ab11dec0d706"/>
+				<textFieldExpression><![CDATA[$F{iva_10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="39" width="100" height="20" uuid="864bb014-f256-4d92-addd-e5e11a5141d6"/>
+				<textFieldExpression><![CDATA[$F{subtotal_en_letras}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="114" splitType="Stretch"/>
+	</summary>
+</jasperReport>

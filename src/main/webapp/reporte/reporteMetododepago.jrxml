@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ac941588-77a0-4bc9-925d-e8d436f9d283">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM metodo_pago]]>
+	</queryString>
+	<field name="id_metodo_pago" class="java.lang.Integer"/>
+	<field name="mp_descripcion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<image>
+				<reportElement x="79" y="12" width="84" height="74" uuid="ed73b68f-aaac-48c0-8416-555eb9d070cb"/>
+				<imageExpression><![CDATA[".\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="179" y="38" width="216" height="28" backcolor="#000000" uuid="10469094-323a-4265-bee8-bca61162057c"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Lista de Metodo de Pago]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="143" y="0" width="290" height="22" uuid="14afae04-887f-4ed4-a0ac-cc90a98dffc7"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Reporte de todos los Metodos de Pago]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="43" y="9" width="100" height="20" uuid="b83f3959-62da-499b-b854-800b6c403c4a"/>
+				<text><![CDATA[Metodo de Pago]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="61c4ee62-0da2-4134-9499-275b6e4de227"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="9" width="100" height="20" uuid="400b0092-7472-4a75-8389-9c161eb76732"/>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="43" y="0" width="100" height="20" uuid="6f999b52-78a3-4e3b-9f22-db79cde575c4"/>
+				<textFieldExpression><![CDATA[$F{mp_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="fc60f959-f21b-4eb7-b37b-4c2bc2f5640b"/>
+				<textFieldExpression><![CDATA[$F{id_metodo_pago}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="286" y="10" width="40" height="20" uuid="7994b52a-cb67-4d3a-a22f-3667e8edc1d1"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="10" width="77" height="20" uuid="f15cb8e2-93c8-4e67-abc5-72259ba8ddcd"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

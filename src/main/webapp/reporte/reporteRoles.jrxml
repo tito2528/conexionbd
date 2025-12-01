@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c46aea4-a8ad-4f26-8ba6-cde3e55171d0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM rol]]>
+	</queryString>
+	<field name="id_rol" class="java.lang.Integer"/>
+	<field name="rol_nombre" class="java.lang.String"/>
+	<field name="rol_descripcion" class="java.lang.String"/>
+	<title>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="35" width="233" height="28" backcolor="#000000" uuid="94b53546-38d1-4b53-9200-435c84d7b4e5"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Lista de Rol]]></text>
+			</staticText>
+			<image>
+				<reportElement x="53" y="12" width="84" height="74" uuid="685ad252-058c-404a-8977-ec52aa369222"/>
+				<imageExpression><![CDATA[".\\logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="137" y="0" width="290" height="22" uuid="b88f16fd-3312-4689-970e-6d0153ad9fad"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Reporte de todos los Roles]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="21" width="555" height="1" uuid="3c134f95-579c-42cf-88b5-8d10178af9bb"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="100" height="20" uuid="11a34308-aa71-41a5-aa3f-34de78600bcf"/>
+				<text><![CDATA[rol_nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="10" width="100" height="20" uuid="e4b18737-5ca4-4115-83a8-9226176e1906"/>
+				<text><![CDATA[rol_descripcion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="7f62b474-4f35-483e-94fb-d97ba63e0216"/>
+				<textFieldExpression><![CDATA[$F{rol_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="33cfef67-c616-4dfd-a859-2f84d628a69f"/>
+				<textFieldExpression><![CDATA[$F{rol_descripcion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="277" y="13" width="40" height="20" uuid="04d2d450-3716-4ab7-b0f7-df9f46e21a6f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="13" width="77" height="20" uuid="1f16fd5d-7eea-4f62-b67e-3f6d7a6d5b43"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
